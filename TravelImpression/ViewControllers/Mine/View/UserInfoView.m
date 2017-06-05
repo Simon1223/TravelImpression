@@ -7,6 +7,7 @@
 //
 
 #import "UserInfoView.h"
+#import "UserModel.h"
 
 @interface UserInfoView ()
 
@@ -46,7 +47,8 @@
     }
     else
     {
-        
+        UserModel *model = [UserModel currentUser];
+        _userNameLabel.text = model.username;
     }
 }
 

@@ -10,21 +10,13 @@
 
 @implementation UserModel
 
-+ (void)load
++(void)load
 {
     [UserModel registerSubclass];
 }
 
-- (instancetype)initWithID:(NSString *)userID
-{
-    self = [UserModel objectWithClassName:@"_User" objectId:userID];
-    if (self)
-    {
-        NSAssert(self, @"没有取到数据");
-        DLog(@"%@",self);
-    }
-    
-    return self;
++ (NSString *)parseClassName {
+    return @"_User";
 }
 
 @end
@@ -51,7 +43,7 @@
     [UserModel logInWithMobilePhoneNumberInBackground:phoneNumber password:password block:^(AVUser *user, NSError *error) {
         if (!error)
         {
-            UserModel *model = [[UserModel alloc] initWithID:user.objectId];
+            UserModel *model = [UserModel currentUser];
             [UserModel loginCompletion:model block:nil];
             success(model);
         }
@@ -74,10 +66,10 @@
                    failure:(void (^) (NSError *error) )failure{
     
     //调用接口发送登录请求
-    [UserModel logInWithMobilePhoneNumberInBackground:account smsCode:verify block:^(AVUser *user, NSError *error) {
+    [UserModel signUpOrLoginWithMobilePhoneNumberInBackground:account smsCode:verify block:^(AVUser * _Nullable user, NSError * _Nullable error) {
         if (!error)
         {
-            UserModel *model = [[UserModel alloc] initWithID:user.objectId];
+            UserModel *model = [UserModel currentUser];
             [UserModel loginCompletion:model block:nil];
             success(model);
         }
@@ -123,7 +115,7 @@
  @param completion 成功回调
  @param failure 失败回调
  */
-+ (void)loginAutoLCompletionBlock:(void(^)())completion
++ (void)loginAutoCompletionBlock:(void(^)())completion
                       failureBlock:(void(^)())failure
 {
     
@@ -144,7 +136,8 @@
             [UserModel logInWithMobilePhoneNumberInBackground:phone password:pass block:^(AVUser *user, NSError *error) {
                 if (!error)
                 {
-                    [UserModel loginCompletion:user block:completion];
+                    UserModel *model = [UserModel currentUser];
+                    [UserModel loginCompletion:model block:completion];
                 }
                 else{
                     failure(error);

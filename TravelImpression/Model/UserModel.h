@@ -50,7 +50,6 @@
  */
 @property (nonatomic, copy) NSString *bindWeibo;
 
-- (instancetype)initWithID:(NSString *)userID;
 
 @end
 

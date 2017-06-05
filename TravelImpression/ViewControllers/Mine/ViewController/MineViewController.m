@@ -55,8 +55,6 @@
     
     headerView.userInteractionEnabled = YES;
     [self.tableView setTableHeaderView:headerView];
-    
-    [self setupUserInfoView];
 }
 
 - (void)setupUserInfoView
@@ -65,10 +63,16 @@
         [userInfoView removeFromSuperview];
         userInfoView = nil;
     }
-    
+//    AVObject *object = [[UserModel query] getObjectWithId:[UserModel currentUser].objectId];
     userInfoView = [[UserInfoView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, headerHeight) status:[UserModel currentUser]?1:0];
     userInfoView.delegate = self;
     [headerView addSubview:userInfoView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setupUserInfoView];
 }
 
 /**

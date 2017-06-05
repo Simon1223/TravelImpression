@@ -64,6 +64,7 @@
                 [UserModel user:user setPassword:_passwordField.text success:^(BOOL success) {
                     if (success) {
                         //设置密码成功
+                        [self dismissViewControllerAnimated:YES completion:nil];
                     }
                     else
                     {
