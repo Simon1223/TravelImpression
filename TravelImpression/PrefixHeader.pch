@@ -1,0 +1,110 @@
+//
+//  PrefixHeader.pch
+//  TravelImpression
+//
+//  Created by Simon on 2017/6/5.
+//  Copyright © 2017年 Simon.H. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "GlobalTool.h"
+#import "HDCategory.h"
+#import "SVProgressHUD.h"
+#import "UIAlertView+Blocks.h"
+#import "Definition.h"
+#import "HttpRequestAPI.h"
+#import "HDMediator.h"
+#import <AVOSCloud/AVOSCloud.h>
+#import "HDBaseViewController.h"
+#import "HDTableViewController.h"
+#endif
+
+
+/*
+ leanCould APPKey
+ */
+#define LCAppID   @"xBGQInVYo09Q85uQRR1MGFTJ-gzGzoHsz"
+#define LCAPPKey  @"ScGpsBj3eTi7E1H6HvaKkCkT"
+
+//DEBUG模式下打印日志,当前行
+
+#ifdef DEBUG
+
+#define DLog(fmt,...)NSLog((@"%s:[Line %d]" fmt),__PRETTY_FUNCTION__,__LINE__,##__VA_ARGS__);
+
+#else
+
+#define DLog(...)
+
+#endif
+
+//登录用户Id
+#define LOGIN_USERID ([GlobalTool sharedTool].loginID)
+
+//Documents 路径
+#define DOCUMENTS_PATH [NSHomeDirectory()stringByAppendingPathComponent:@"Documents"]
+//系统版本
+#define SYSTEM_VERSION ([[[UIDevice currentDevice] systemVersion] floatValue])
+
+//当前版本
+#define CURRENT_VER ([[[NSBundle mainBundle]infoDictionary] objectForKey:@"CFBundleVersion"])
+
+//设备高度
+#define DEVICE_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+//设备宽度
+#define DEVICE_WIDTH ([UIScreen mainScreen].bounds.size.width)
+
+//R G B 决定颜色
+#define RGB(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:a]
+
+#define themeColor RGB(51,204,153,1)
+
+//UIFont
+#define Font(size) [UIFont systemFontOfSize:(size)]
+
+//弱引用
+#define WEAKSELF __weak __typeof(self) weakSelf = self;
+
+//网络变化
+#define NetworkEnable  @"NetworkIsReachability"
+#define NetworkDisable @"NetworkIsNotReachability"
+
+//通知
+#define NETWORKSTATUSCHANGE @"NetworkStatusChange"
+#define SONGPLAYSTATUSCHANGE @"SongPlayStatusChange"
+#define SONGPCHANGE @"SongChange"
+#define PLAYMODECHANGE @"On/OffLineSongPlay"
+#define REFRESHSONGLIST @"RefreshSongList"
+#define MUSICTIMEINTERVAL @"MusicTimeInterval"
+#define BEGINNAVSPEECH @"BeginNavSpeech"
+#define ENDNAVSPEECH @"EndNavSpeech"
+
+#define kLoginDidFinishNotification @"kLoginDidFinishNotification"
+#define kLogoutDidFinishNotification @"kLoginDidFinishNotification"
+
+#define DefaultNetError @"没有连接网络，请检查重新连接。"
+
+// 消息通知
+#define RegisterNotify(_name, _selector)  \
+[[NSNotificationCenter defaultCenter] addObserver:self  \
+selector:_selector name:_name object:nil];
+
+#define RemoveNofify            \
+[[NSNotificationCenter defaultCenter] removeObserver:self];
+
+#define SendNotify(_name, _object)  \
+[[NSNotificationCenter defaultCenter] postNotificationName:_name object:_object];
+
+#define DefaultCoverImage [UIImage imageNamed:@""]
+
+//颜色
+#define itemColor [UIColor lightGrayColor]
+#define itemSelectedColor RGB(51,204,153,1)
+
+#endif /* PrefixHeader_pch */
